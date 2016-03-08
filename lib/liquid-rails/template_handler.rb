@@ -13,7 +13,11 @@ module Liquid
       end
 
       def render(template, local_assigns={})
-        @view.controller.headers['Content-Type'] ||= 'text/html; charset=utf-8'
+        # Sometimes you need to render when there are no headers (e.g. in a
+        # delayed job rendering to PDF)
+        if @view.controller.headers
+          @view.controller.headers['Content-Type'] ||= 'text/html; charset=utf-8'
+        end
 
         assigns = if @controller.respond_to?(:liquid_assigns, true)
           @controller.send(:liquid_assigns)
