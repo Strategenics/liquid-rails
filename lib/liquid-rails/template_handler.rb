@@ -15,7 +15,7 @@ module Liquid
       def render(template, local_assigns={})
         # Sometimes you need to render when there is no response (e.g. in a
         # delayed job rendering to PDF)
-        if @view.controller.response
+        if @view.controller.respond_to?(:response) && @view.controller.response
           @view.controller.headers['Content-Type'] ||= 'text/html; charset=utf-8'
         end
 
