@@ -10,6 +10,7 @@ module Liquid
       end
 
       initializer 'liquid-rails.include_partial' do |app|
+	require 'liquid-rails/resolver_system'
         Liquid::Template.file_system = Liquid::Rails::ResolverSystem.new
       end
 
